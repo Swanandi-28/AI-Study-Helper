@@ -1,11 +1,10 @@
-export function supervisorAgent(question: string) {
-  if (question.toLowerCase().includes("math")) {
-    return "Use Calculator Tool";
-  }
+import { createAgent } from "langchain";
+import { model } from "./model.js";
+import { calculatorTool } from "./tools.js";
 
-  if (question.toLowerCase().includes("history")) {
-    return "Use Knowledge Tool";
-  }
-
-  return "Use Gemini Model";
-}
+export const agent = createAgent({
+  model,
+  tools: [calculatorTool],
+  systemPrompt:
+    "You are an AI Study Helper. Use the calculator tool whenever the user asks a math question.",
+});
